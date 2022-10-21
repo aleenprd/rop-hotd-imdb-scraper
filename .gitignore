@@ -3,6 +3,14 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# All CSV except
+*.csv
+!./src/data/hotd_s1.csv
+!./src/data/rop_s1.csv
+
+# Folders
+/development_files/
+
 # C extensions
 *.so
 
