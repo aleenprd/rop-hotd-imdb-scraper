@@ -13,9 +13,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
 from typing import List
 
-# Class helpers
-from abc import ABC
-
 
 class ScraperException(Exception):
     """Starting point for Scraper exceptions."""
@@ -27,8 +24,8 @@ class ImdbScraperException(ScraperException):
     pass
 
 
-class Scraper(ABC):
-    """Abstract class meant to be parent of various other scrapers.
+class Scraper():
+    """Class meant to be parent of various other scrapers.
     
     Attributes:
         chromedriver (chromedriver): a Chrome webdriver for Selenium.
