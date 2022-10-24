@@ -98,6 +98,26 @@ class ImdbReviewScraper(Scraper):
         driver_service = Service(ChromeDriverManager().install())
         self.chromedriver = webdriver.Chrome(service=driver_service)
 
+    @staticmethod
+    def get_number_of_seasons(soup: BeautifulSoup) -> List[int]:
+        """Starting from the soup of any season episode list page of a series,
+        it retrives a list of seasons.
+        
+        Note: 
+            This is useful for iterating through season links. 
+            
+        Args:
+            soup (BeautifulSoup): soup of any season's episode list page.
+
+        Returns:
+            seasons (List[str]): a list of season numbers.
+        """
+        seasons = Scraper.fetch_el_if_available(soup, 'div', 'episode-list-select')
+        seasons = [float(s) for s in regex.findall(r'-?\d+\.?\d*', seasons)]
+        seasons = [int(s) for s in seasons if s <=50]
+        
+        return seasons
+
     def get_episodes_links(self, link: str) -> List[str]:
         """Retrieve links to episodes, from series' season main page.
         
@@ -124,11 +144,15 @@ class ImdbReviewScraper(Scraper):
         return links
 
     @staticmethod
-    def get_ratings_page(episode_page, suffix="/ratings/?ref_=tt_ov_rt"):
+    def get_season_page(title_page: str, season_number: int=1, suffix="episodes?season=") -> str:
+        return f"{title_page}{suffix}{season_number}" 
+    
+    @staticmethod
+    def get_ratings_page(episode_page: str, suffix="/ratings/?ref_=tt_ov_rt") -> str:
         return ("/").join(episode_page.split("/")[:-1]) + suffix 
 
     @staticmethod
-    def get_reviews_page(episode_page, suffix="/reviews?ref_=tt_urv"):
+    def get_reviews_page(episode_page: str, suffix="/reviews?ref_=tt_urv") -> str:
         return ("/").join(episode_page.split("/")[:-1]) + suffix 
         
     def scroll_reviews_and_cook_soup(self, link: str) -> BeautifulSoup:
