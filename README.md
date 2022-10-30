@@ -10,7 +10,7 @@ This build assumes you are using a Linux/Mac with Python version at least 3.8 in
 <br>
 
 ### Installing Poetry
-[Poetry](https://python-poetry.org/) is the packageing and dependency management tool of choice. A .toml and a .lock file is provided. Poetry will install dependencies based on these. 
+[<b>Poetry</b>](https://python-poetry.org/) is the packageing and dependency management tool of choice. A .toml and a .lock file is provided. Poetry will install dependencies based on these. 
 
 The [official way](https://python-poetry.org/docs/) of installing Poetry:
 ```
@@ -66,4 +66,18 @@ cd src
 And from here you can access the script which will start the scraper. There are parameters which you will need to set from the command line, in order to scrape your desired series. For the IMDB review scraper, you only need specify the title page of the show. Then what happens is that the scraper will mine all data from the reviews of the show itself and each episode of each season.
 ```
 python3 scrape_imdb_reviews.py --title_page https://www.imdb.com/title/tt7631058/ --output_path ./data/rop.csv
+```
+
+## Running with Docker
+Using the Dockerfile, you can build an image and run the scraper interactively with Docker.
+```
+sudo docker build -t imdb-scraper .
+```
+If all is right, Docker should build the image. Your output should be something like:
+```
+Successfully built fa10565946f9
+Successfully tagged imdb-scraper:latest
+```
+To run it with Docker, simply do:
+```
 ```
