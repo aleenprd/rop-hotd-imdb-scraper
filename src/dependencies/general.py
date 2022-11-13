@@ -3,6 +3,7 @@
 
 from typing import Callable
 from time import time
+from typing import List
 
 
 def timing(f: Callable) -> None:
@@ -19,3 +20,15 @@ def timing(f: Callable) -> None:
         print(f"\nExecution time: {exec_time} minutes.")
 
     return wrap
+
+
+def flatten(l: List[List]) -> List:
+    """Flatten a list of lists.
+
+    Args:
+        l (List): a list of lists.
+
+    Returns:
+        List: a flattened list.
+    """
+    return [item for sublist in l for item in sublist]
